@@ -21,14 +21,17 @@
 /*            byte d1 = dec.cryptByte(e1);                                        */
 /*            byte d2 = dec.cryptByte(e2);                                        */
 /*            assert (d1 == b1 && d2 == b2);                                      */
+
 /**********************************************************************************/
 public class StreamCipher {
     // Class constants.
-    public static final int KEY_SIZE_BYTES   = PRGen.KEY_SIZE_BYTES;
+    public static final int KEY_SIZE_BYTES = PRGen.KEY_SIZE_BYTES;
     public static final int NONCE_SIZE_BYTES = 8;
 
     // Instance variables.
     // IMPLEMENT THIS
+    PRGen prg;
+    PRF prf;
 
     // Creates a new StreamCipher with key <key> and nonce composed of
     // nonceArr[nonceOffset] through nonceArr[nonceOffset + NONCE_SIZE_BYTES - 1].
@@ -36,6 +39,8 @@ public class StreamCipher {
         assert key.length == KEY_SIZE_BYTES;
 
         // IMPLEMENT THIS
+        prg = new PRGen(key);
+        prf = new PRF(key);
     }
 
     public StreamCipher(byte[] key, byte[] nonce) {
@@ -44,16 +49,21 @@ public class StreamCipher {
 
     // Encrypts or decrypts the next byte in the stream.
     public byte cryptByte(byte in) {
-        throw new RuntimeException("Unimplemented.");
-        // IMPLEMENT THIS
+        // throw new RuntimeException("Unimplemented.");
+        // IMPLEMENT
+        // keystream is prg.next(8);
+        return (byte) (in ^ prg.next(8));
     }
 
     // Encrypts or decrypts multiple bytes.
     // Encrypts or decrypts inBuf[inOffset] through inBuf[inOffset + numBytes - 1],
     // storing the result in outBuf[outOffset] through outBuf[outOffset + numBytes - 1].
-    public void cryptBytes(byte[]  inBuf, int  inOffset, 
+    public void cryptBytes(byte[] inBuf, int inOffset,
                            byte[] outBuf, int outOffset, int numBytes) {
-        throw new RuntimeException("Unimplemented.");
+        // throw new RuntimeException("Unimplemented.");
         // IMPLEMENT THIS
+        for (int i = inOffset; i < inOffset + numBytes; i++) {
+            outBuf[outOffset + i - inOffset] = cryptByte(inBuf[i]);
+        }
     }
 }

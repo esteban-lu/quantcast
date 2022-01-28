@@ -43,7 +43,6 @@ public class PRGen extends java.util.Random {
     public static final int KEY_SIZE_BYTES = PRF.KEY_SIZE_BYTES;
 
     // Instance variables.
-    // IMPLEMENT THIS
     PRF function;
     byte[] state = new byte[KEY_SIZE_BYTES];
 
@@ -51,7 +50,6 @@ public class PRGen extends java.util.Random {
         super(); // Calls the parent class's constructor.  Leave this here.
         assert key.length == KEY_SIZE_BYTES;
 
-        // IMPLEMENT THIS
         function = new PRF(key);
     }
 
@@ -60,17 +58,15 @@ public class PRGen extends java.util.Random {
     protected int next(int bits) {
         assert 0 < bits && bits <= 32;
 
-        // IMPLEMENT THIS // cite: https://docs.oracle.com/javase/7/docs/api/java/math/BigInteger.html
+        // cite: https://docs.oracle.com/javase/7/docs/api/java/math/BigInteger.html
         state = function.eval(state);
-        BigInteger temp = new BigInteger(state);
 
-        System.out.println("next_a: " + Integer.toBinaryString(temp.intValue()));
+        BigInteger temp = new BigInteger(state);
         for (int i = state.length - 1; i >= bits; i--) {
             temp = temp.clearBit(i);
         }
-        System.out.println("next_b: " + Integer.toBinaryString(temp.intValue()));
-
         return temp.intValue();
+
         // throw new RuntimeException("Unimplemented.");
     }
 }
