@@ -58,15 +58,14 @@ public class PRGen extends java.util.Random {
     protected int next(int bits) {
         assert 0 < bits && bits <= 32;
 
-        // cite: https://docs.oracle.com/javase/7/docs/api/java/math/BigInteger.html
         state = function.eval(state);
 
+        // cite: https://docs.oracle.com/javase/7/docs/api/java/math/BigInteger.html
         BigInteger temp = new BigInteger(state);
         for (int i = state.length - 1; i >= bits; i--) {
             temp = temp.clearBit(i);
         }
         return temp.intValue();
 
-        // throw new RuntimeException("Unimplemented.");
     }
 }
