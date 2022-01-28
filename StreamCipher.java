@@ -22,6 +22,8 @@
 /*            byte d2 = dec.cryptByte(e2);                                        */
 /*            assert (d1 == b1 && d2 == b2);                                      */
 
+import java.util.Arrays;
+
 /**********************************************************************************/
 public class StreamCipher {
     // Class constants.
@@ -31,7 +33,8 @@ public class StreamCipher {
     // Instance variables.
     // IMPLEMENT THIS
     PRGen prg;
-    PRF prf;
+    PRGen noncePrg;
+    byte[] nonce = new byte[NONCE_SIZE_BYTES];
 
     // Creates a new StreamCipher with key <key> and nonce composed of
     // nonceArr[nonceOffset] through nonceArr[nonceOffset + NONCE_SIZE_BYTES - 1].
@@ -40,7 +43,10 @@ public class StreamCipher {
 
         // IMPLEMENT THIS
         prg = new PRGen(key);
-        prf = new PRF(key);
+        // cite: https://www.tutorialspoint.com/java/lang/system_arraycopy.htm
+        System.arraycopy(nonceArr, nonceOffset, nonce, 0, NONCE_SIZE_BYTES);
+        System.out.println("        nonce: " + Arrays.toString(nonce));
+        noncePrg = new PRGen(key);
     }
 
     public StreamCipher(byte[] key, byte[] nonce) {
@@ -51,8 +57,7 @@ public class StreamCipher {
     public byte cryptByte(byte in) {
         // throw new RuntimeException("Unimplemented.");
         // IMPLEMENT
-        // keystream is prg.next(8);
-        return (byte) (in ^ prg.next(8));
+        return (byte) (in ^ prg.next(NONCE_SIZE_BYTES) ^ noncePrg.next(NONCE_SIZE_BYTES));
     }
 
     // Encrypts or decrypts multiple bytes.

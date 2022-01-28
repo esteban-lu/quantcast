@@ -5,7 +5,7 @@
 /* ------------------------------------------------------------------------------ */
 /* NOTE: This is the only cryptographic code you are allowed to use for our       */
 /*       assignment. You will not receive credit if you use any other             */
-/*	 cryptographic libraries.                                                 */
+/*	     cryptographic libraries.                                                 */
 /* ------------------------------------------------------------------------------ */
 /* USAGE: To create a pseudo-random function with key k of length KEY_SIZE_BYTES: */
 /*            PRF prf = new PRF(k);                                               */
@@ -45,17 +45,16 @@
 /*                                                                                */
 /**********************************************************************************/
 
-import java.security.Key;
-import java.security.SecureRandom;
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
-
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class PRF {
     // Class constants.
-    public static final int KEY_SIZE_BYTES    = 32;
+    public static final int KEY_SIZE_BYTES = 32;
     public static final int OUTPUT_SIZE_BYTES = 32;
     private static final String ALGORITHM_NAME = "HmacSHA256";
 
@@ -65,7 +64,7 @@ public class PRF {
     // Creates a new PRF with key <prfKey>.
     public PRF(byte[] prfKey) {
         assert prfKey.length == KEY_SIZE_BYTES;
-        
+
         try {
             mac = Mac.getInstance(ALGORITHM_NAME);
             KeyGenerator keygen = KeyGenerator.getInstance(ALGORITHM_NAME);
@@ -94,7 +93,7 @@ public class PRF {
     // Adds input to buffer and evaluates the PRF on the contents of the buffer.
     // Uses inBuf[inOffset] through inBuf[inOffset + nbytes - 1] as additional input.
     // Throws an IndexOutOfBoundsException if either buffer is too small.
-    public synchronized void eval(byte[]  inBuf, int  inOffset, int numBytes,
+    public synchronized void eval(byte[] inBuf, int inOffset, int numBytes,
                                   byte[] outBuf, int outOffset) {
         try {
             mac.update(inBuf, inOffset, numBytes);
@@ -123,4 +122,4 @@ public class PRF {
     public byte[] eval(byte[] val) {
         return eval(val, 0, val.length);
     }
- }
+}

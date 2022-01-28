@@ -40,16 +40,24 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.TestSC">
     <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
     </configuration>
+    <configuration name="TestPRGen" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="TestPRGen" />
+      <module name="cos432-random" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestSC" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="TestSC" />
+      <module name="cos432-random" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />

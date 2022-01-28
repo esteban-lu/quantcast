@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class TestSC {
@@ -10,22 +11,21 @@ public class TestSC {
         k[2] = 1;
         k[5] = 1;
         k[31] = 1;
-
         byte[] n = new byte[NONCE_SIZE_BYTES];
         n[3] = 1;
         n[5] = 1;
 
         boolean failed = false;
 
-        /* SANITY TEST: ENCRYPTION AND DECRYPTION*/
+        /* SANITY TEST: ENCRYPTION AND DECRYPTION */
         System.out.println("Encryption and Decryption Tests");
         int NUM_TESTS = 10;
         byte[] text = new byte[NUM_TESTS];
         Random r = new Random();
-        r.nextBytes(text);                  // randomize test text bytes
+        r.nextBytes(text);   // randomize test text bytes
         StreamCipher enc = new StreamCipher(k, n);
         StreamCipher dec = new StreamCipher(k, n);
-        System.out.print("    ");
+        System.out.print("   ");
         byte[] result = new byte[NUM_TESTS];
         for (int i = 0; i < NUM_TESTS; i++) {
             byte e = enc.cryptByte(text[i]);
@@ -33,48 +33,48 @@ public class TestSC {
             result[i] = e;
             if (text[i] != d) failed = true;
         }
-        if (failed) System.out.println("    FAILED: Decryption failed.");
-        else System.out.println("    SUCCESS: crypteByte() encryption");
-        failed = false;
+        if (failed) System.out.println("   FAILED: Decryption failed.");
+        else System.out.println("   SUCCESS: cryptByte() encryption");
         System.out.println();
 
         /* SANITY TEST: DETERMINISTIC ENCRYPTION */
         System.out.println("StreamCipher Tests");
         StreamCipher enc2 = new StreamCipher(k, n);
-        System.out.print("    ");
+        System.out.print("   ");
+        byte[] result2 = new byte[NUM_TESTS];
         for (int i = 0; i < NUM_TESTS; i++) {
             byte e = enc2.cryptByte(text[i]);
-            if (e != result[i]) failed = true;
+            result2[i] = e;
         }
-        if (failed) System.out.println("  FAILED: StreamCiphers with same k, n encrypted differently.");
-        else System.out.println("    SUCCESS: StreamCiphers with same k, n have the same encryption.");
-        failed = false;
+        if (Arrays.equals(result, result2))
+            System.out.println("   SUCCESS: StreamCiphers with same k, n have the same encryption.");
+        else System.out.println("   FAILED: StreamCiphers with same k, n encrypted differently.");
 
         n[1] = 1;   // change n
         n[2] = 1;
         n[3] = 0;
+        n[7] = 1;
         StreamCipher enc3 = new StreamCipher(k, n);
-        System.out.print("    ");
+        System.out.print("   ");
+        byte[] result3 = new byte[NUM_TESTS];
         for (int i = 0; i < NUM_TESTS; i++) {
             byte e = enc3.cryptByte(text[i]);
-            if (e == result[i]) failed = true;
+            result3[i] = e;
         }
-        if (failed) System.out.println("    FAILED: StreamCiphers with different n have the same encryption.");
-        else System.out.println("    SUCCESS: StreamCiphers with different n encrypted differently.");
-        failed = false;
-
-        n[1] = 0;   // reset n
-        n[2] = 0;
-        n[3] = 1;
+        if (Arrays.equals(result, result3))
+            System.out.println("   FAILED: StreamCiphers with different n have the same encryption.");
+        else System.out.println("   SUCCESS: StreamCiphers with different n encrypted differently.");
+        
         k[22] = 1;  // change k
         StreamCipher enc4 = new StreamCipher(k, n);
-        System.out.print("    ");
+        System.out.print("   ");
+        byte[] result4 = new byte[NUM_TESTS];
         for (int i = 0; i < NUM_TESTS; i++) {
             byte e = enc4.cryptByte(text[i]);
-            if (e == result[i]) failed = true;
+            result4[i] = 3;
         }
-        if (failed) System.out.println("    FAILED: StreamCiphers with different k have the same encryption.");
-        else System.out.println("    SUCCESS: StreamCiphers with different k encrypted differently.");
-        failed = false;
+        if (Arrays.equals(result3, result4))
+            System.out.println("   FAILED: StreamCiphers with different k have the same encryption.");
+        else System.out.println("   SUCCESS: StreamCiphers with different k encrypted differently.");
     }
 }
