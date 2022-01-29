@@ -29,20 +29,21 @@ public class StreamCipher {
     public static final int NONCE_SIZE_BYTES = 8;
 
     // Instance variables.
-    // IMPLEMENT THIS
     PRGen prg;
-    PRGen noncePrg;
-    byte[] nonce = new byte[NONCE_SIZE_BYTES];
 
     // Creates a new StreamCipher with key <key> and nonce composed of
     // nonceArr[nonceOffset] through nonceArr[nonceOffset + NONCE_SIZE_BYTES - 1].
     public StreamCipher(byte[] key, byte[] nonceArr, int nonceOffset) {
         assert key.length == KEY_SIZE_BYTES;
 
-        prg = new PRGen(key);
         // cite: https://www.tutorialspoint.com/java/lang/system_arraycopy.htm
-        System.arraycopy(nonceArr, nonceOffset, nonce, 0, NONCE_SIZE_BYTES);
-        noncePrg = new PRGen(nonce);
+        // cite: https://www.thesslstore.com/blog/block-cipher-vs-stream-cipher/
+        byte[] nonceAndKey = new byte[KEY_SIZE_BYTES];
+        System.arraycopy(key, 0, nonceAndKey, 0, KEY_SIZE_BYTES);
+        for (int i = 0; i < NONCE_SIZE_BYTES; i++) {
+            nonceAndKey[i] = (byte) (key[i] ^ nonceArr[i + nonceOffset]);
+        }
+        prg = new PRGen(nonceAndKey);
     }
 
     public StreamCipher(byte[] key, byte[] nonce) {
@@ -51,8 +52,7 @@ public class StreamCipher {
 
     // Encrypts or decrypts the next byte in the stream.
     public byte cryptByte(byte in) {
-        int temp = noncePrg.next(NONCE_SIZE_BYTES);
-        return (byte) (in ^ (prg.next(NONCE_SIZE_BYTES) ^ temp));
+        return (byte) (in ^ prg.next(NONCE_SIZE_BYTES));
     }
 
     // Encrypts or decrypts multiple bytes.
@@ -60,7 +60,6 @@ public class StreamCipher {
     // storing the result in outBuf[outOffset] through outBuf[outOffset + numBytes - 1].
     public void cryptBytes(byte[] inBuf, int inOffset,
                            byte[] outBuf, int outOffset, int numBytes) {
-
         for (int i = inOffset; i < inOffset + numBytes; i++) {
             outBuf[outOffset + i - inOffset] = cryptByte(inBuf[i]);
         }
