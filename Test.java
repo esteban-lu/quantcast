@@ -15,7 +15,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.*;
 import java.nio.file.Files;
 
-@SuppressFBWarnings("DM_DEFAULT_ENCODING")
 public class Test {
 
     // Default System.out
@@ -169,7 +168,6 @@ public class Test {
         return false;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public static void main(String[] args) {
 
         // Save default System.out
