@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5baf9bb5-932c-4aeb-b512-14e7921a3bb0" name="Default Changelist" comment="" />
+    <list default="true" id="ec7c5fc8-2989-4d64-b379-18ad690ad3a6" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,7 +21,7 @@
     <analyzeAfterCompile>true</analyzeAfterCompile>
     <toolWindowToFront>false</toolWindowToFront>
   </component>
-  <component name="ProjectId" id="24UCy1Yew2BOJUqLMFDeNX6tiDm" />
+  <component name="ProjectId" id="24Kr2pj14igt8kjz5Igv0k0zTYV" />
   <component name="ProjectViewState">
     <option name="abbreviatePackageNames" value="true" />
     <option name="autoscrollFromSource" value="true" />
@@ -44,25 +44,19 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\esteb\Desktop\quantcast" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Application.Test">
+  <component name="RunManager" selected="Application.TestSC">
     <configuration name="&lt;template&gt;" type="TestNG" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
     </configuration>
-    <configuration name="MostActiveCookie" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="MostActiveCookie" />
-      <module name="quantcast" />
-      <option name="PROGRAM_PARAMETERS" value="cookie_log.csv -d 2018-12-08" />
+    <configuration name="TestPRGen" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="TestPRGen" />
+      <module name="cos432-random" />
       <method v="2" />
     </configuration>
-    <configuration name="Test" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="Test" />
-      <module name="quantcast" />
+    <configuration name="TestSC" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="TestSC" />
+      <module name="cos432-random" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
